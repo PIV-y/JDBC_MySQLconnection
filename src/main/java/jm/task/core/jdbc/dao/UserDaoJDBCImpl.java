@@ -4,7 +4,6 @@ import jm.task.core.jdbc.model.User;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
-
 import static jm.task.core.jdbc.util.Util.getMySQLConnection;
 
 public class UserDaoJDBCImpl implements UserDao {
@@ -22,19 +21,19 @@ public class UserDaoJDBCImpl implements UserDao {
     private final String sqlRemoveUserById = "DELETE FROM `testkata`.`users` WHERE id = ?";
     private final String sqlGetAllUsers = "SELECT * FROM testkata.users";
     private final String sqlCleanUsersTable = "DELETE FROM testkata.users";
-    private Connection connection = getMySQLConnection();
+    private static final Connection connection = getMySQLConnection();
 
     public void createUsersTable() {
-        try (PreparedStatement statement = connection.prepareStatement(sqlCreateUsersTable)) {
-            statement.executeUpdate();
+        try (Statement statement = connection.createStatement()) {
+            statement.executeQuery(sqlCreateUsersTable);
             System.out.println("table created");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public void dropUsersTable() {
-        try (PreparedStatement statement = connection.prepareStatement(sqlDropUsersTable)) {
-            statement.executeUpdate();
+        try (Statement statement = connection.createStatement()) {
+            statement.executeQuery(sqlDropUsersTable);
             System.out.println("table deleted");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,8 +62,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         ResultSet result;
         List<User> users = new LinkedList<>();
-        try (PreparedStatement statement = connection.prepareStatement(sqlGetAllUsers)) {
-            result = statement.executeQuery();
+        try (Statement statement = connection.createStatement()) {
+            result = statement.executeQuery(sqlGetAllUsers);
             while (result.next()) {
                 users.add(new User( result.getString(2),
                                     result.getString(3),
@@ -77,8 +76,8 @@ public class UserDaoJDBCImpl implements UserDao {
         return users;
     }
     public void cleanUsersTable() {
-        try (PreparedStatement statement = connection.prepareStatement(sqlCleanUsersTable)) {
-            statement.executeUpdate();
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(sqlCleanUsersTable);
             System.out.println("Table is clean.");
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-     //   new UserServiceImpl().createUsersTable();
-        new UserServiceImpl().saveUser("Obi", "Wan", (byte)37);
+        new UserServiceImpl().createUsersTable();
+   //     new UserServiceImpl().saveUser("Obi", "Wan", (byte)37);
 //        new UserServiceImpl().saveUser("Samanta", "Benet", (byte)26);
 //        new UserServiceImpl().removeUserById(2);
 //        new UserServiceImpl().saveUser("Krag", "Tarvin", (byte)32);
