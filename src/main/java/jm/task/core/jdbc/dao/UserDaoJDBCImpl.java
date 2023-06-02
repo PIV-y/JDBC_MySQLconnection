@@ -10,17 +10,17 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
 
     }
-    private final String sqlCreateUsersTable = "CREATE TABLE IF NOT EXISTS `testkata`.`users` (" +
+    private static final String sqlCreateUsersTable = "CREATE TABLE IF NOT EXISTS `testkata`.`users` (" +
             "`id` BIGINT(255) NOT NULL AUTO_INCREMENT, " +
             "`name` VARCHAR(45) NULL , " +
             "`lastName` VARCHAR(45) NULL, " +
             "`age` TINYINT NULL, " +
             "PRIMARY KEY (`id`));";
-    private final String sqlDropUsersTable = "DROP TABLE IF EXISTS testkata.users;";
-    private final String sqlSaveUser = "INSERT IGNORE INTO testkata.users (`name`, `lastName`, `age`) VALUES (?,?,?)";
-    private final String sqlRemoveUserById = "DELETE FROM `testkata`.`users` WHERE id = ?";
-    private final String sqlGetAllUsers = "SELECT * FROM testkata.users";
-    private final String sqlCleanUsersTable = "DELETE FROM testkata.users";
+    private static final String sqlDropUsersTable = "DROP TABLE IF EXISTS testkata.users;";
+    private static final String sqlSaveUser = "INSERT IGNORE INTO testkata.users (`name`, `lastName`, `age`) VALUES (?,?,?)";
+    private static final String sqlRemoveUserById = "DELETE FROM `testkata`.`users` WHERE id = ?";
+    private static final String sqlGetAllUsers = "SELECT * FROM testkata.users";
+    private static final String sqlCleanUsersTable = "DELETE FROM testkata.users";
     private static final Connection connection = getMySQLConnection();
 
     public void createUsersTable() {
