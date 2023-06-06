@@ -25,7 +25,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Statement statement = CONNECTION.createStatement()) {
-            statement.executeQuery(SQL_CREATE_USERS_TABLE);
+            statement.executeUpdate(SQL_CREATE_USERS_TABLE);
             System.out.println("table created");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -33,29 +33,27 @@ public class UserDaoJDBCImpl implements UserDao {
     }
     public void dropUsersTable() {
         try (Statement statement = CONNECTION.createStatement()) {
-            statement.executeQuery(SQL_DROP_USERS_TABLE);
+            statement.executeUpdate(SQL_DROP_USERS_TABLE);
             System.out.println("table deleted");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public void saveUser(String name, String lastName, byte age) {
-        try (Statement stmnt = CONNECTION.createStatement()) {
-            PreparedStatement statement = (PreparedStatement) stmnt;
+        try (PreparedStatement statement = CONNECTION.prepareStatement(SQL_SAVE_USER)) {
             statement.setString(1, name);
             statement.setString(2, lastName);
             statement.setByte(3, age);
-            statement.executeUpdate(SQL_SAVE_USER);
+            statement.executeUpdate();
             System.out.println("User " + name + " " + lastName + " at the age of " + age + " has been added.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public void removeUserById(long id) {
-        try (Statement stmnt = CONNECTION.createStatement()) {
-            PreparedStatement statement = (PreparedStatement) stmnt;
+        try (PreparedStatement statement = CONNECTION.prepareStatement(SQL_REMOVE_USER_BY_ID)) {
             statement.setLong(1, id);
-            statement.executeUpdate(SQL_REMOVE_USER_BY_ID);
+            statement.executeUpdate();
             System.out.println("User with id=" + id + " has been deleted.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
